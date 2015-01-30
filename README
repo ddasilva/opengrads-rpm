@@ -1,0 +1,20 @@
+
+Credit
+===============================================================
+Daniel da Silva   <danieldasilva2@acm.org>
+OpenGrADS Project <http://opengrads.org>
+
+Notes
+===============================================================
+The contents of the SOURCES folder are modified versions of the 
+tarballs released by the OpenGrADS project. They are modified in
+the following ways:
+
+ 1. renamed from grads-[...].tar.gz to opengrads-[...].tar.gz
+ 2. the single folder inside is renamed from grads-[...] to
+    to opengrads-[...]
+
+#2 was made so the extracted directory would match the build
+directory rpmbuild expects. #1 was made to differentiate the
+tarball from the original release.
+
