@@ -2,7 +2,8 @@
 # Constants
 # ----------------------------------------------------------------------
 %define pkgver 2.1.a2.oga.1
-%define pkgname grads-%{pkgver}
+%define pkgname opengrads-%{pkgver}
+%define tarball %{pkgname}-bundle-x86_64-unknown-linux-gnu.tar.gz
 %define prefix /home/dedasilv/tmp/fake_opt
 
 # Package Metadata
@@ -13,7 +14,7 @@ Version: %{pkgver}
 Release: 1
 License: GPL v2
 Group: Application/Science
-Source: http://downloads.sourceforge.net/project/opengrads/grads2/%{pkgver}/Linux/%{pkgname}-bundle-x86_64-unknown-linux-gnu.tar.gz
+Source: http://downloads.sourceforge.net/project/opengrads/grads2/%{pkgver}/Linux/%{tarball}
 URL: http://opengrads.org/wiki/index.php?title=OpenGrADS_Documentation
 Distribution: CentOS 6  # is this correct? n
 Vendor: OpenGrADS
@@ -22,26 +23,24 @@ Packager: Daniel da Silva <danieldasilva2@acm.org>
 %description
 The Grid Analysis and Display System (GrADS) is an interactive desktop tool for easy access, manipulation, and visualization of earth science data. The OpenGrADS Project seeks to develop advanced interfaces and extensions based on the main GrADS engine. 
 
-
 # Targets
 # ----------------------------------------------------------------------
 %prep
-rm -rf $RPM_BUILD_ROOT/*
-tar xzvf $RPM_SOURCE_DIR/%{pkgname}-bundle-x86_64-unknown-linux-gnu.tar.gz
-
-%build
-
+%setup
 
 %install
 mkdir -p %{prefix}
-cp -r %{pkgname}/Contents %{prefix}/%{pkgname}
+cp -r $RPM_BUILD_DIR/%{pkgname}/Contents %{prefix}/%{pkgname}
 rm %{prefix}/grads
 ln -s %{prefix}/%{pkgname} %{prefix}/grads
+# workaround for file check, since we don't use BUILDROOT d
+build_root_prefix=$RPM_BUILD_ROOT/%prefix
+mkdir -p $build_root_prefix
+cp -r %{prefix}/%{pkgname} $build_root_prefix
 
 # File List
 # ----------------------------------------------------------------------
 %files
-%doc 
 %{prefix}/%{pkgname}/gradsdap
 %{prefix}/%{pkgname}/opengrads
 %{prefix}/%{pkgname}/nomads
