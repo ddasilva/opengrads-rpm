@@ -4,7 +4,7 @@
 %define pkgver 2.1.a2.oga.1
 %define pkgname opengrads-%{pkgver}
 %define tarball %{pkgname}-bundle-x86_64-unknown-linux-gnu.tar.gz
-%define prefix /home/dedasilv/tmp/fake_opt
+%define prefix /opt
 
 # Package Metadata
 # ----------------------------------------------------------------------
