@@ -1,4 +1,10 @@
 
+Running
+===============================================================
+$ rpm -ba SPECS/opengrads.spec
+
+The output will be in `RPMS/x86_64/opengrads-[...].rpm'.
+
 Credit
 ===============================================================
 Daniel da Silva   <danieldasilva2@acm.org>
@@ -11,8 +17,8 @@ tarballs released by the OpenGrADS project. They are modified in
 the following ways:
 
  1. renamed from grads-[...].tar.gz to opengrads-[...].tar.gz
- 2. the single folder inside is renamed from grads-[...] to
-    to opengrads-[...]
+ 2. the single folder inside renamed from grads-[...] to
+    opengrads-[...]
 
 #2 was made so the extracted directory would match the build
 directory rpmbuild expects. #1 was made to differentiate the
