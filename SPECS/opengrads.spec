@@ -16,12 +16,24 @@ License: GPL v2
 Group: Application/Science
 Source: http://downloads.sourceforge.net/project/opengrads/grads2/%{pkgver}/Linux/%{tarball}
 URL: http://opengrads.org/wiki/index.php?title=OpenGrADS_Documentation
-Distribution: CentOS 6  # is this correct? n
+Distribution: CentOS 6
 Vendor: OpenGrADS
 Packager: Daniel da Silva <danieldasilva2@acm.org>
 
 %description
 The Grid Analysis and Display System (GrADS) is an interactive desktop tool for easy access, manipulation, and visualization of earth science data. The OpenGrADS Project seeks to develop advanced interfaces and extensions based on the main GrADS engine. 
+
+# Dependency overrides
+# ----------------------------------------------------------------------
+# do not depend on ld-linux-x86-64.so.2. Opengrads provides some libs in
+# the libs/ directory for use if you don't have them on your system. But
+# unfortunately some of these link against private symbols. The need for
+# the private symbols is unknown, but may just be use of an old symbol that
+# was made private in more recent versions.
+%{?filter_setup:
+  %filter_requires_in %{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/x86_64/libs
+  %filter_setup
+  }
 
 # Targets
 # ----------------------------------------------------------------------
@@ -44,73 +56,73 @@ cp -r %{prefix}/%{pkgname} $build_root_prefix
 # ----------------------------------------------------------------------
 %files
 %{prefix}/%{pkgname}/Documentation.html
-%{prefix}/%{pkgname}/Linux/Versions/2.1.a2.oga.1/x86_64/VERSION
-%{prefix}/%{pkgname}/Linux/Versions/2.1.a2.oga.1/x86_64/bufrscan
-%{prefix}/%{pkgname}/Linux/Versions/2.1.a2.oga.1/x86_64/env.pod
-%{prefix}/%{pkgname}/Linux/Versions/2.1.a2.oga.1/x86_64/fish.pod
-%{prefix}/%{pkgname}/Linux/Versions/2.1.a2.oga.1/x86_64/gex/ams.udxt
-%{prefix}/%{pkgname}/Linux/Versions/2.1.a2.oga.1/x86_64/gex/bjt.udxt
-%{prefix}/%{pkgname}/Linux/Versions/2.1.a2.oga.1/x86_64/gex/env.gex
-%{prefix}/%{pkgname}/Linux/Versions/2.1.a2.oga.1/x86_64/gex/fish.gex
-%{prefix}/%{pkgname}/Linux/Versions/2.1.a2.oga.1/x86_64/gex/fish.udxt
-%{prefix}/%{pkgname}/Linux/Versions/2.1.a2.oga.1/x86_64/gex/gsf.udxt
-%{prefix}/%{pkgname}/Linux/Versions/2.1.a2.oga.1/x86_64/gex/gsudf.gex
-%{prefix}/%{pkgname}/Linux/Versions/2.1.a2.oga.1/x86_64/gex/hello.udxt
-%{prefix}/%{pkgname}/Linux/Versions/2.1.a2.oga.1/x86_64/gex/ipc.udxt
-%{prefix}/%{pkgname}/Linux/Versions/2.1.a2.oga.1/x86_64/gex/lats.udxt
-%{prefix}/%{pkgname}/Linux/Versions/2.1.a2.oga.1/x86_64/gex/libbjt.gex
-%{prefix}/%{pkgname}/Linux/Versions/2.1.a2.oga.1/x86_64/gex/libgfortran.so.3
-%{prefix}/%{pkgname}/Linux/Versions/2.1.a2.oga.1/x86_64/gex/libhello.gex
-%{prefix}/%{pkgname}/Linux/Versions/2.1.a2.oga.1/x86_64/gex/libipc.gex
-%{prefix}/%{pkgname}/Linux/Versions/2.1.a2.oga.1/x86_64/gex/liblats.gex
-%{prefix}/%{pkgname}/Linux/Versions/2.1.a2.oga.1/x86_64/gex/libmf.gex
-%{prefix}/%{pkgname}/Linux/Versions/2.1.a2.oga.1/x86_64/gex/libmf.udxt
-%{prefix}/%{pkgname}/Linux/Versions/2.1.a2.oga.1/x86_64/gex/orb.gex
-%{prefix}/%{pkgname}/Linux/Versions/2.1.a2.oga.1/x86_64/gex/orb.udxt
-%{prefix}/%{pkgname}/Linux/Versions/2.1.a2.oga.1/x86_64/gex/path.gex
-%{prefix}/%{pkgname}/Linux/Versions/2.1.a2.oga.1/x86_64/gex/re.gex
-%{prefix}/%{pkgname}/Linux/Versions/2.1.a2.oga.1/x86_64/gex/re.udxt
-%{prefix}/%{pkgname}/Linux/Versions/2.1.a2.oga.1/x86_64/gex/shfilt.gex
-%{prefix}/%{pkgname}/Linux/Versions/2.1.a2.oga.1/x86_64/gex/shfilt.udxt
-%{prefix}/%{pkgname}/Linux/Versions/2.1.a2.oga.1/x86_64/gex/tle.gex
-%{prefix}/%{pkgname}/Linux/Versions/2.1.a2.oga.1/x86_64/gex/tle.udxt
-%{prefix}/%{pkgname}/Linux/Versions/2.1.a2.oga.1/x86_64/gex/udxt
-%{prefix}/%{pkgname}/Linux/Versions/2.1.a2.oga.1/x86_64/grads
-%{prefix}/%{pkgname}/Linux/Versions/2.1.a2.oga.1/x86_64/grib2scan
-%{prefix}/%{pkgname}/Linux/Versions/2.1.a2.oga.1/x86_64/gribmap
-%{prefix}/%{pkgname}/Linux/Versions/2.1.a2.oga.1/x86_64/gribscan
-%{prefix}/%{pkgname}/Linux/Versions/2.1.a2.oga.1/x86_64/gsudf.pod
-%{prefix}/%{pkgname}/Linux/Versions/2.1.a2.oga.1/x86_64/libbjt.pod
-%{prefix}/%{pkgname}/Linux/Versions/2.1.a2.oga.1/x86_64/libipc.pod
-%{prefix}/%{pkgname}/Linux/Versions/2.1.a2.oga.1/x86_64/liblats.pod
-%{prefix}/%{pkgname}/Linux/Versions/2.1.a2.oga.1/x86_64/libmf.pod
-%{prefix}/%{pkgname}/Linux/Versions/2.1.a2.oga.1/x86_64/libs/libICE.so.6
-%{prefix}/%{pkgname}/Linux/Versions/2.1.a2.oga.1/x86_64/libs/libSM.so.6
-%{prefix}/%{pkgname}/Linux/Versions/2.1.a2.oga.1/x86_64/libs/libX11.so.6
-%{prefix}/%{pkgname}/Linux/Versions/2.1.a2.oga.1/x86_64/libs/libXau.so.6
-%{prefix}/%{pkgname}/Linux/Versions/2.1.a2.oga.1/x86_64/libs/libXaw.so.7
-%{prefix}/%{pkgname}/Linux/Versions/2.1.a2.oga.1/x86_64/libs/libXext.so.6
-%{prefix}/%{pkgname}/Linux/Versions/2.1.a2.oga.1/x86_64/libs/libXmu.so.6
-%{prefix}/%{pkgname}/Linux/Versions/2.1.a2.oga.1/x86_64/libs/libXpm.so.4
-%{prefix}/%{pkgname}/Linux/Versions/2.1.a2.oga.1/x86_64/libs/libXt.so.6
-%{prefix}/%{pkgname}/Linux/Versions/2.1.a2.oga.1/x86_64/libs/libc.so.6
-%{prefix}/%{pkgname}/Linux/Versions/2.1.a2.oga.1/x86_64/libs/libdl.so.2
-%{prefix}/%{pkgname}/Linux/Versions/2.1.a2.oga.1/x86_64/libs/libgcc_s.so.1
-%{prefix}/%{pkgname}/Linux/Versions/2.1.a2.oga.1/x86_64/libs/libm.so.6
-%{prefix}/%{pkgname}/Linux/Versions/2.1.a2.oga.1/x86_64/libs/libpthread.so.0
-%{prefix}/%{pkgname}/Linux/Versions/2.1.a2.oga.1/x86_64/libs/librt.so.1
-%{prefix}/%{pkgname}/Linux/Versions/2.1.a2.oga.1/x86_64/libs/libstdc++.so.6
-%{prefix}/%{pkgname}/Linux/Versions/2.1.a2.oga.1/x86_64/libs/libuuid.so.1
-%{prefix}/%{pkgname}/Linux/Versions/2.1.a2.oga.1/x86_64/libs/libxcb.so.1
-%{prefix}/%{pkgname}/Linux/Versions/2.1.a2.oga.1/x86_64/orb.pod
-%{prefix}/%{pkgname}/Linux/Versions/2.1.a2.oga.1/x86_64/path.pod
-%{prefix}/%{pkgname}/Linux/Versions/2.1.a2.oga.1/x86_64/re.pod
-%{prefix}/%{pkgname}/Linux/Versions/2.1.a2.oga.1/x86_64/saakeskus.pod_
-%{prefix}/%{pkgname}/Linux/Versions/2.1.a2.oga.1/x86_64/sgrads
-%{prefix}/%{pkgname}/Linux/Versions/2.1.a2.oga.1/x86_64/shfilt.pod
-%{prefix}/%{pkgname}/Linux/Versions/2.1.a2.oga.1/x86_64/stnmap
-%{prefix}/%{pkgname}/Linux/Versions/2.1.a2.oga.1/x86_64/tle.pod
-%{prefix}/%{pkgname}/Linux/Versions/2.1.a2.oga.1/x86_64/wgrib
+%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/x86_64/VERSION
+%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/x86_64/bufrscan
+%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/x86_64/env.pod
+%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/x86_64/fish.pod
+%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/x86_64/gex/ams.udxt
+%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/x86_64/gex/bjt.udxt
+%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/x86_64/gex/env.gex
+%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/x86_64/gex/fish.gex
+%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/x86_64/gex/fish.udxt
+%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/x86_64/gex/gsf.udxt
+%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/x86_64/gex/gsudf.gex
+%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/x86_64/gex/hello.udxt
+%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/x86_64/gex/ipc.udxt
+%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/x86_64/gex/lats.udxt
+%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/x86_64/gex/libbjt.gex
+%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/x86_64/gex/libgfortran.so.3
+%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/x86_64/gex/libhello.gex
+%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/x86_64/gex/libipc.gex
+%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/x86_64/gex/liblats.gex
+%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/x86_64/gex/libmf.gex
+%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/x86_64/gex/libmf.udxt
+%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/x86_64/gex/orb.gex
+%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/x86_64/gex/orb.udxt
+%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/x86_64/gex/path.gex
+%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/x86_64/gex/re.gex
+%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/x86_64/gex/re.udxt
+%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/x86_64/gex/shfilt.gex
+%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/x86_64/gex/shfilt.udxt
+%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/x86_64/gex/tle.gex
+%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/x86_64/gex/tle.udxt
+%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/x86_64/gex/udxt
+%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/x86_64/grads
+%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/x86_64/grib2scan
+%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/x86_64/gribmap
+%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/x86_64/gribscan
+%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/x86_64/gsudf.pod
+%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/x86_64/libbjt.pod
+%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/x86_64/libipc.pod
+%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/x86_64/liblats.pod
+%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/x86_64/libmf.pod
+%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/x86_64/libs/libICE.so.6
+%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/x86_64/libs/libSM.so.6
+%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/x86_64/libs/libX11.so.6
+%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/x86_64/libs/libXau.so.6
+%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/x86_64/libs/libXaw.so.7
+%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/x86_64/libs/libXext.so.6
+%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/x86_64/libs/libXmu.so.6
+%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/x86_64/libs/libXpm.so.4
+%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/x86_64/libs/libXt.so.6
+%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/x86_64/libs/libc.so.6
+%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/x86_64/libs/libdl.so.2
+%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/x86_64/libs/libgcc_s.so.1
+%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/x86_64/libs/libm.so.6
+%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/x86_64/libs/libpthread.so.0
+%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/x86_64/libs/librt.so.1
+%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/x86_64/libs/libstdc++.so.6
+%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/x86_64/libs/libuuid.so.1
+%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/x86_64/libs/libxcb.so.1
+%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/x86_64/orb.pod
+%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/x86_64/path.pod
+%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/x86_64/re.pod
+%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/x86_64/saakeskus.pod_
+%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/x86_64/sgrads
+%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/x86_64/shfilt.pod
+%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/x86_64/stnmap
+%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/x86_64/tle.pod
+%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/x86_64/wgrib
 %{prefix}/%{pkgname}/Linux/Versions/Current@
 %{prefix}/%{pkgname}/Linux/x86_64@
 %{prefix}/%{pkgname}/Resources/Documentation/16colors.html
