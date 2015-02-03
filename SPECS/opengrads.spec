@@ -2,8 +2,9 @@
 # Constants
 # ----------------------------------------------------------------------
 %define pkgver 2.1.a2.oga.1
+%define tarball opengrads-2.1.a2.oga.1-bundle-i686-pc-linux-gnu.tar.gz
 %define pkgname opengrads-%{pkgver}
-%define tarball %{pkgname}-bundle-x86_64-unknown-linux-gnu.tar.gz
+%define arch i686
 %define prefix /opt
 
 # Package Metadata
@@ -25,13 +26,13 @@ The Grid Analysis and Display System (GrADS) is an interactive desktop tool for 
 
 # Dependency overrides
 # ----------------------------------------------------------------------
-# do not depend on ld-linux-x86-64.so.2. Opengrads provides some libs in
+# do not depend on ld-linux*.so.2. Opengrads provides some libs in
 # the libs/ directory for use if you don't have them on your system. But
 # unfortunately some of these link against private symbols. The need for
 # the private symbols is unknown, but may just be use of an old symbol that
 # was made private in more recent versions.
 %{?filter_setup:
-  %filter_requires_in %{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/x86_64/libs
+  %filter_requires_in %{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/%{arch}/libs
   %filter_setup
   }
 
@@ -41,9 +42,10 @@ The Grid Analysis and Display System (GrADS) is an interactive desktop tool for 
 %setup
 
 %install
+rm -rf %{prefix}/%{pkgname}
 mkdir -p %{prefix}/%{pkgname}
 cp -r $RPM_BUILD_DIR/%{pkgname}/Contents/* %{prefix}/%{pkgname}
-if [[ -e %{prefix}/grads ]]; then
+if [ -e %{prefix}/grads ]; then
    rm %{prefix}/grads
 fi
 ln -s %{prefix}/%{pkgname} %{prefix}/grads
@@ -56,75 +58,58 @@ cp -r %{prefix}/%{pkgname} $build_root_prefix
 # ----------------------------------------------------------------------
 %files
 %{prefix}/%{pkgname}/Documentation.html
-%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/x86_64/VERSION
-%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/x86_64/bufrscan
-%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/x86_64/env.pod
-%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/x86_64/fish.pod
-%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/x86_64/gex/ams.udxt
-%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/x86_64/gex/bjt.udxt
-%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/x86_64/gex/env.gex
-%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/x86_64/gex/fish.gex
-%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/x86_64/gex/fish.udxt
-%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/x86_64/gex/gsf.udxt
-%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/x86_64/gex/gsudf.gex
-%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/x86_64/gex/hello.udxt
-%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/x86_64/gex/ipc.udxt
-%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/x86_64/gex/lats.udxt
-%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/x86_64/gex/libbjt.gex
-%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/x86_64/gex/libgfortran.so.3
-%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/x86_64/gex/libhello.gex
-%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/x86_64/gex/libipc.gex
-%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/x86_64/gex/liblats.gex
-%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/x86_64/gex/libmf.gex
-%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/x86_64/gex/libmf.udxt
-%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/x86_64/gex/orb.gex
-%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/x86_64/gex/orb.udxt
-%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/x86_64/gex/path.gex
-%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/x86_64/gex/re.gex
-%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/x86_64/gex/re.udxt
-%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/x86_64/gex/shfilt.gex
-%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/x86_64/gex/shfilt.udxt
-%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/x86_64/gex/tle.gex
-%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/x86_64/gex/tle.udxt
-%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/x86_64/gex/udxt
-%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/x86_64/grads
-%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/x86_64/grib2scan
-%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/x86_64/gribmap
-%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/x86_64/gribscan
-%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/x86_64/gsudf.pod
-%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/x86_64/libbjt.pod
-%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/x86_64/libipc.pod
-%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/x86_64/liblats.pod
-%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/x86_64/libmf.pod
-%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/x86_64/libs/libICE.so.6
-%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/x86_64/libs/libSM.so.6
-%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/x86_64/libs/libX11.so.6
-%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/x86_64/libs/libXau.so.6
-%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/x86_64/libs/libXaw.so.7
-%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/x86_64/libs/libXext.so.6
-%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/x86_64/libs/libXmu.so.6
-%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/x86_64/libs/libXpm.so.4
-%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/x86_64/libs/libXt.so.6
-%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/x86_64/libs/libc.so.6
-%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/x86_64/libs/libdl.so.2
-%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/x86_64/libs/libgcc_s.so.1
-%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/x86_64/libs/libm.so.6
-%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/x86_64/libs/libpthread.so.0
-%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/x86_64/libs/librt.so.1
-%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/x86_64/libs/libstdc++.so.6
-%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/x86_64/libs/libuuid.so.1
-%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/x86_64/libs/libxcb.so.1
-%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/x86_64/orb.pod
-%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/x86_64/path.pod
-%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/x86_64/re.pod
-%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/x86_64/saakeskus.pod_
-%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/x86_64/sgrads
-%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/x86_64/shfilt.pod
-%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/x86_64/stnmap
-%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/x86_64/tle.pod
-%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/x86_64/wgrib
+%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/%{arch}/VERSION
+%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/%{arch}/bufrscan
+%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/%{arch}/env.pod
+%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/%{arch}/fish.pod
+%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/%{arch}/gex/ams.udxt
+%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/%{arch}/gex/bjt.udxt
+%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/%{arch}/gex/env.gex
+%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/%{arch}/gex/fish.gex
+%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/%{arch}/gex/fish.udxt
+%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/%{arch}/gex/gsf.udxt
+%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/%{arch}/gex/gsudf.gex
+%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/%{arch}/gex/hello.udxt
+%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/%{arch}/gex/ipc.udxt
+%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/%{arch}/gex/lats.udxt
+%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/%{arch}/gex/libbjt.gex
+%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/%{arch}/gex/libgfortran.so.3
+%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/%{arch}/gex/libhello.gex
+%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/%{arch}/gex/libipc.gex
+%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/%{arch}/gex/liblats.gex
+%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/%{arch}/gex/libmf.gex
+%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/%{arch}/gex/libmf.udxt
+%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/%{arch}/gex/orb.gex
+%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/%{arch}/gex/orb.udxt
+%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/%{arch}/gex/path.gex
+%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/%{arch}/gex/re.gex
+%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/%{arch}/gex/re.udxt
+%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/%{arch}/gex/shfilt.gex
+%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/%{arch}/gex/shfilt.udxt
+%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/%{arch}/gex/tle.gex
+%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/%{arch}/gex/tle.udxt
+%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/%{arch}/gex/udxt
+%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/%{arch}/grads
+%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/%{arch}/grib2scan
+%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/%{arch}/gribmap
+%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/%{arch}/gribscan
+%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/%{arch}/gsudf.pod
+%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/%{arch}/libbjt.pod
+%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/%{arch}/libipc.pod
+%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/%{arch}/liblats.pod
+%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/%{arch}/libmf.pod
+%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/%{arch}/libs/*
+%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/%{arch}/orb.pod
+%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/%{arch}/path.pod
+%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/%{arch}/re.pod
+%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/%{arch}/saakeskus.pod_
+%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/%{arch}/sgrads
+%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/%{arch}/shfilt.pod
+%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/%{arch}/stnmap
+%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/%{arch}/tle.pod
+%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/%{arch}/wgrib
 %{prefix}/%{pkgname}/Linux/Versions/Current@
-%{prefix}/%{pkgname}/Linux/x86_64@
+%{prefix}/%{pkgname}/Linux/%{arch}@
 %{prefix}/%{pkgname}/Resources/Documentation/16colors.html
 %{prefix}/%{pkgname}/Resources/Documentation/GrADS.css
 %{prefix}/%{pkgname}/Resources/Documentation/SDFdescriptorfile.html

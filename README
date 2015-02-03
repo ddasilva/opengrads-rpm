@@ -1,9 +1,9 @@
-
 Running
 ===============================================================
 $ ./build.sh
 
-The output will be in `RPMS/x86_64/opengrads-[...].rpm'.
+The output will be in `RPMS/x86_64/opengrads-[...].rpm' or
+`RMPS/i386/opengrads-[...].rpm'.
 
 Credit
 ===============================================================
@@ -12,6 +12,9 @@ OpenGrADS Project <http://opengrads.org>
 
 Notes
 ===============================================================
+Can be used to build a i686 or x86_64 package. Modify the
+%{arch} and %{tarball} variables in SPECS/opengrads.spec.
+
 The contents of the SOURCES folder are modified versions of the 
 tarballs released by the OpenGrADS project. They are modified in
 the following ways:
