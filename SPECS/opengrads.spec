@@ -2,9 +2,9 @@
 # Constants
 # ----------------------------------------------------------------------
 %define pkgver 2.1.a2.oga.1
-%define tarball opengrads-2.1.a2.oga.1-bundle-i686-pc-linux-gnu.tar.gz
+%define tarball opengrads-2.1.a2.oga.1-bundle-x86_64-unknown-linux-gnu.tar.gz
+%define arch x86_64
 %define pkgname opengrads-%{pkgver}
-%define arch i686
 %define prefix /opt
 
 # Package Metadata
@@ -24,18 +24,6 @@ Packager: Daniel da Silva <danieldasilva2@acm.org>
 %description
 The Grid Analysis and Display System (GrADS) is an interactive desktop tool for easy access, manipulation, and visualization of earth science data. The OpenGrADS Project seeks to develop advanced interfaces and extensions based on the main GrADS engine. 
 
-# Dependency overrides
-# ----------------------------------------------------------------------
-# do not depend on ld-linux*.so.2. Opengrads provides some libs in
-# the libs/ directory for use if you don't have them on your system. But
-# unfortunately some of these link against private symbols. The need for
-# the private symbols is unknown, but may just be use of an old symbol that
-# was made private in more recent versions.
-%{?filter_setup:
-  %filter_requires_in %{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/%{arch}/libs
-  %filter_setup
-  }
-
 # Targets
 # ----------------------------------------------------------------------
 %prep
@@ -44,11 +32,11 @@ The Grid Analysis and Display System (GrADS) is an interactive desktop tool for 
 %install
 rm -rf %{prefix}/%{pkgname}
 mkdir -p %{prefix}/%{pkgname}
-cp -r $RPM_BUILD_DIR/%{pkgname}/Contents/* %{prefix}/%{pkgname}
-if [ -e %{prefix}/grads ]; then
-   rm %{prefix}/grads
+rm -fr $RPM_BUILD_DIR/%{pkgname}/Contents/Linux/Versions/%{pkgver}/%{arch}/libs
+cp -r  $RPM_BUILD_DIR/%{pkgname}/Contents/* %{prefix}/%{pkgname}
+if [ ! -e %{prefix}/grads ]; then
+   ln -s %{prefix}/%{pkgname} %{prefix}/grads
 fi
-ln -s %{prefix}/%{pkgname} %{prefix}/grads
 # workaround for file check, since we don't use BUILDROOT
 build_root_prefix=$RPM_BUILD_ROOT/%prefix
 mkdir -p $build_root_prefix
@@ -98,7 +86,6 @@ cp -r %{prefix}/%{pkgname} $build_root_prefix
 %{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/%{arch}/libipc.pod
 %{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/%{arch}/liblats.pod
 %{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/%{arch}/libmf.pod
-%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/%{arch}/libs/*
 %{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/%{arch}/orb.pod
 %{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/%{arch}/path.pod
 %{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/%{arch}/re.pod
