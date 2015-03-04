@@ -30,21 +30,20 @@ The Grid Analysis and Display System (GrADS) is an interactive desktop tool for 
 %setup
 
 %install
-rm -rf %{prefix}/%{pkgname}
-mkdir -p %{prefix}/%{pkgname}
+
+# Do not install libs, and do not install libgfortran.so.3
 rm -fr $RPM_BUILD_DIR/%{pkgname}/Contents/Linux/Versions/%{pkgver}/%{arch}/libs
-cp -r  $RPM_BUILD_DIR/%{pkgname}/Contents/* %{prefix}/%{pkgname}
-if [ ! -e %{prefix}/grads ]; then
-   ln -s %{prefix}/%{pkgname} %{prefix}/grads
-fi
-# workaround for file check, since we don't use BUILDROOT
-build_root_prefix=$RPM_BUILD_ROOT/%prefix
-mkdir -p $build_root_prefix
-cp -r %{prefix}/%{pkgname} $build_root_prefix
+rm -rf $(find $RPM_BUILD_RIR -name libgfortran.so.3)
+
+mkdir -p $RPM_BUILD_ROOT/%{prefix}/%{pkgname}
+rm -rf $RPM_BUILD_ROOT/%{prefix}/%{pkgname}/*
+cp -r $RPM_BUILD_DIR/%{pkgname}/Contents/* $RPM_BUILD_ROOT/%{prefix}/%{pkgname}
+ln -s %{pkgname} $RPM_BUILD_ROOT/%{prefix}/grads
 
 # File List
 # ----------------------------------------------------------------------
 %files
+%{prefix}/grads
 %{prefix}/%{pkgname}/Documentation.html
 %{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/%{arch}/VERSION
 %{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/%{arch}/bufrscan
@@ -61,7 +60,6 @@ cp -r %{prefix}/%{pkgname} $build_root_prefix
 %{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/%{arch}/gex/ipc.udxt
 %{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/%{arch}/gex/lats.udxt
 %{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/%{arch}/gex/libbjt.gex
-%{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/%{arch}/gex/libgfortran.so.3
 %{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/%{arch}/gex/libhello.gex
 %{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/%{arch}/gex/libipc.gex
 %{prefix}/%{pkgname}/Linux/Versions/%{pkgver}/%{arch}/gex/liblats.gex
